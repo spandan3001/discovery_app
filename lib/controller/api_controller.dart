@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../model/item.dart';
+import '../utils/snackbar_helper.dart';
 
 class ApiController extends GetxController {
   static const _baseApi = "https://api-stg.together.buzz/mocks/discovery";
@@ -25,10 +27,22 @@ class ApiController extends GetxController {
         Uri.parse('$_baseApi?page=$page&limit=10'),
       );
 
-      // Return the decoded JSON
-      return json.decode(response.body);
+      if (response.statusCode == 200) {
+        // Return the decoded JSON
+        return json.decode(response.body);
+      } else {
+        //handle error
+        SnackBarHelper.showSnackBar(
+            title: "Error",
+            message: '${response.statusCode}',
+            contentType: ContentType.failure);
+      }
     } catch (e) {
-      print("Error occurred while getting the data: $e");
+      //handle error
+      SnackBarHelper.showSnackBar(
+          title: "Error",
+          message: "Error occurred while getting the data: $e",
+          contentType: ContentType.failure);
     }
     return {};
   }
@@ -63,6 +77,11 @@ class ApiController extends GetxController {
       // Stop loading in case of an error or empty response
       isLoading = false;
       // Handle error
+      SnackBarHelper.showSnackBar(
+          title: "Error",
+          message:
+              "Error occurred while getting the data ,may the data is empty",
+          contentType: ContentType.failure);
     }
   }
 }
