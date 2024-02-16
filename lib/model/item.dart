@@ -1,3 +1,5 @@
+//Data model for the response we get
+
 class Item {
   final int id;
   final String title;
@@ -11,6 +13,7 @@ class Item {
     required this.imageUrl,
   });
 
+//convert from json to data model
   factory Item.fromJson(Map<String, dynamic> json) {
     return Item(
       id: json['id'] ?? '',
