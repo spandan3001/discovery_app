@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../model/item.dart';
@@ -12,11 +13,29 @@ class ApiController extends GetxController {
   // List to store the item model
   late RxList<Item> items = <Item>[].obs;
 
+  //scroll controller for list builder
+  final ScrollController scrollController = ScrollController();
   // Variable to handle loading indication
-  bool isLoading = false;
+  Rx<bool> isLoading = false.obs;
 
   // The page number which will increment always
   int page = 1;
+
+  @override
+  void onReady() {
+    super.onReady();
+    super.onInit();
+
+    //added listener to scroll controller
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge &&
+          scrollController.position.pixels != 0 &&
+          !isLoading.value) {
+        // Load more data when reaching the bottom
+        process();
+      }
+    });
+  }
 
   // Function to get data from the API
   Future<Map<String, dynamic>> getData() async {
@@ -50,11 +69,11 @@ class ApiController extends GetxController {
   // Function to process the data
   void process() async {
     // If already loading, return
-    if (isLoading) {
+    if (isLoading.value) {
       return;
     } else {
       // Show loading
-      isLoading = true;
+      isLoading(true);
     }
 
     // Call getData function
@@ -72,10 +91,10 @@ class ApiController extends GetxController {
       page = data['page'] + 1;
 
       // Stop loading
-      isLoading = false;
+      isLoading(false);
     } else {
       // Stop loading in case of an error or empty response
-      isLoading = false;
+      isLoading(false);
       // Handle error
       SnackBarHelper.showSnackBar(
           title: "Error",
