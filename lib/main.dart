@@ -1,5 +1,7 @@
+import 'package:discovery_app/utils/snackbar_helper.dart';
 import 'package:discovery_app/views/discovery_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,8 +12,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: DiscoveryPage(),
+    return GetMaterialApp(
+      home: const DiscoveryPage(),
+      scaffoldMessengerKey: SnackBarHelper.key,
     );
   }
 }

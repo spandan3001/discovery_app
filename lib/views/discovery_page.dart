@@ -10,18 +10,21 @@ class DiscoveryPage extends StatefulWidget {
 }
 
 class _DiscoveryPageState extends State<DiscoveryPage> {
+  // Get the ApiController instance for state management
   final ApiController apiController = Get.put(ApiController());
 
   @override
   void initState() {
     super.initState();
-    apiController.process(); // Load initial data when the page is initialized
+    //initial check connectivity
+    apiController.checkConnectivity(null);
+
+    // Load initial data when the page is initialized
+    apiController.process();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Get the ApiController instance for state management
-
     return Scaffold(
       // App Bar with the title "Discovery Page"
       appBar: AppBar(
