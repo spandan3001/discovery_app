@@ -9,6 +9,14 @@ This Flutter app demonstrates a simple implementation of a discovery page with p
 - **Pagination:** Implement infinite scroll to load more items as the user reaches the bottom of the list.
 - **GetX State Management:** Utilize the GetX package for efficient state management in Flutter.
 
+## Output
+
+
+
+https://github.com/spandan3001/discovery_app/assets/73657279/1457df8d-b4ba-4b18-a71f-55594c2672b6
+
+
+
 ## Requirements
 
 - Flutter: Ensure that you have Flutter installed. If not, follow the installation guide: [Flutter Installation Guide](https://flutter.dev/docs/get-started/install)
